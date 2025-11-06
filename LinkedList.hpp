@@ -72,11 +72,11 @@ const Node<T>* LinkedList<T>::getTail() const {
 template <typename T>
 void LinkedList<T>::AddHead(const T& data) {
 	if (head != nullptr) {
-		head -> prev = new Node(data, nullptr, &head);
-		head = &(head -> prev);
+		head -> prev = new Node(data, nullptr, head);
+		head = head -> prev;
 	} else {
 		head = new Node(data, nullptr, nullptr);
-		tail = &head;
+		tail = head;
 	}
 	count++;
 }
@@ -84,11 +84,11 @@ void LinkedList<T>::AddHead(const T& data) {
 template <typename T>
 void LinkedList<T>::AddTail(const T& data) {
 	if (tail != nullptr) {
-		tail -> next = new Node(data, &tail, nullptr);
-		tail = &(tail -> next);
+		tail -> next = new Node(data, tail, nullptr);
+		tail = tail -> next;
 	} else {
 		tail = new Node(data, nullptr, nullptr);
-		head = &tail;
+		head = tail;
 	}
 	count++;
 }
