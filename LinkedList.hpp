@@ -160,3 +160,51 @@ void LinkedList<T>::printReverse() const {
 	}
 }
 
+template <typename T>
+LinkedList<T>& LinkedList<T>::operator=(LinkedList<T>&& other) noexcept {
+	if (this == &other)
+		return *this;
+
+	delete this -> head;
+	delete this -> tail;
+
+	this -> head = other -> head;
+	this -> tail = other -> tail;
+	this -> count = other -> count;
+
+	other -> head = nullptr;
+	other -> tail = nullptr;
+	other -> count = 0;
+
+	return *this;
+}
+
+template <typename T>
+LinkedList<T>& LinkedList<T>::operator=(const LinkedList<T>& rhs) {
+	if (this == &rhs)
+		return *this;
+
+	delete this -> head;
+	delete this -> tail;
+
+	this -> head = rhs -> head;
+	this -> tail = rhs -> tail;
+	this -> count = rhs -> count;
+
+	return *this;
+}
+
+template <typename T>
+LinkedList<T>::LinkedList(const LinkedList<T>& list) : head(list -> head), tail(list -> tail), count(list -> count) {}
+
+template <typename T>
+LinkedList<T>::LinkedList(LinkedList<T>&& other) noexcept : head(other -> head), tail(other -> tail), count(other -> count) {
+	other -> head = nullptr;
+	other -> tail = nullptr;
+	other -> count = 0;
+}
+
+template <typename T>
+LinkedList<T>::~LinkedList() {
+	Clear();
+}
