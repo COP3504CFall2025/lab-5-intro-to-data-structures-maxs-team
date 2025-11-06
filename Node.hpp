@@ -6,6 +6,5 @@ struct Node {
     Node* next;
 
     Node() = default;
-    Node(const T& d) : data(d) {}
-    Node(const T& d, Node* p, Node* n) : data(d), prev(p), next(n) {}
+    Node(const T& d, Node*& p, Node*& n) : data(d), prev(p), next(n) {}
 };
