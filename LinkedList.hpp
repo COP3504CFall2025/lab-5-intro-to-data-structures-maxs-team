@@ -98,7 +98,7 @@ bool LinkedList<T>::RemoveHead() {
 	if (head == nullptr)
 		return false;
 	if ((head -> next) != nullptr) {
-		head = &(head -> next);
+		head = head -> next;
 		delete head -> prev;
 		head -> prev = nullptr;
 	} else {
@@ -114,7 +114,7 @@ bool LinkedList<T>::RemoveTail() {
 	if (tail == nullptr)
 		return false;
 	if ((tail -> prev) != nullptr) {
-		tail = &(tail -> prev);
+		tail = tail -> prev;
 		delete tail -> next;
 		tail -> next = nullptr;
 	} else {
