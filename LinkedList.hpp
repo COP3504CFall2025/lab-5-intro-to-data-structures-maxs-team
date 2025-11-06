@@ -104,6 +104,7 @@ bool LinkedList<T>::RemoveHead() {
 	} else {
 		delete head;
 		head = nullptr;
+		tail = nullptr;
 	}
 	count--;
 	return true;
@@ -120,6 +121,7 @@ bool LinkedList<T>::RemoveTail() {
 	} else {
 		delete tail;
 		tail = nullptr;
+		head = nullptr;
 	}
 	count--;
 	return true;
@@ -184,7 +186,7 @@ LinkedList<T>& LinkedList<T>::operator=(const LinkedList<T>& rhs) {
 
 	Node<T>* curr = rhs.head;
 	while (curr != nullptr) {
-		this -> AddTail(rhs.head->data);
+		this -> AddTail(curr->data);
 		curr = curr -> next;
 	}
 
