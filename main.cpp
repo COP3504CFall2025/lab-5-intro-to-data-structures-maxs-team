@@ -19,21 +19,11 @@
 */
 
 int main() {
-    ABS<int>* one = new ABS<int>();
-    std::cout << one -> getMaxCapacity()<<std::endl;
-    std::cout << one -> getSize()<<std::endl;
-    one -> push(1);
-    std::cout << one -> getMaxCapacity()<<std::endl;
-    one -> push(2);
-    std::cout << one -> getMaxCapacity()<<std::endl;
-    one -> push(3);
-    std::cout << one -> getMaxCapacity()<<std::endl;
-    ABS<int>* two = new ABS<int>(*one);
-    one -> PrintForward();
-    two -> pop();
-    two -> PrintForward();
-    std::cout << "peek: " << two -> peek() << std::endl;
-    std::cout << two -> getMaxCapacity()<<std::endl;
+    ABQ<int>* one = new ABQ<int>();
+
+    one -> enqueue(1);
+    one -> enqueue(2);
+    one -> enqueue(3);
 
     delete one;
     one = nullptr;

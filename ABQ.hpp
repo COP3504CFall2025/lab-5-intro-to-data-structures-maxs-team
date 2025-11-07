@@ -60,14 +60,14 @@ void ABQ<T>::resize(int cap) {
 }
 
 template<typename T>
-ABQ<T>::ABQ() : capacity_(1), curr_size_(0), array_(new T[1     ]){}
+ABQ<T>::ABQ() : capacity_(1), curr_size_(0), array_(new T[1]){}
 
 template<typename T>
 void ABQ<T>::enqueue(const T& data) {
     if (++curr_size_ > capacity_)
         resize(capacity_*2);
     if (curr_size_ > 1) {
-        for (int i = curr_size_- 2; i > 0; i++)
+        for (int i = curr_size_- 2; i > 0; i--)
             array_[i + 1] = array_[i];
     }
     array_[0] = data;
