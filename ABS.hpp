@@ -47,7 +47,10 @@ private:
 
 template<typename T>
 void ABS<T>::resize() {
-    capacity_ *= scale_factor_;
+    if (capacity_ == 0)
+        capacity_++;
+    else
+        capacity_ *= scale_factor_;
     T* new_arr = new T[capacity_];
     for (int i = 0; static_cast<size_t>(i) < curr_size_; i++) {
         new_arr[i] = array_[i];
@@ -61,9 +64,9 @@ ABS<T>::ABS() : capacity_(1), curr_size_(0), array_(new T[1]){}
 
 template<typename T>
 void ABS<T>::push(const T& data) {
-    if (++curr_size_ > capacity_)
+    if (curr_size_ >= capacity_)
         resize();
-    array_[curr_size_-1] = data;
+    array_[curr_size_++] = data;
 }
 
 template<typename T>
