@@ -46,8 +46,11 @@ public:
 
 
 template<typename T>
-void ABQ<T>::resize() {
-    capacity_ *= scale_factor_;
+void ABS<T>::resize(int cap) {
+    if (cap == 0)
+        capacity_++;
+    else
+        capacity_ = cap;
     T* new_arr = new T[capacity_];
     for (int i = 0; static_cast<size_t>(i) < curr_size_; i++) {
         new_arr[i] = array_[i];

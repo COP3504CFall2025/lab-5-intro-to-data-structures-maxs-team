@@ -165,7 +165,7 @@ T ABS<T>::pop() {
         throw std::runtime_error("No elements in the array");
     T data = array_[--curr_size_] ;
     array_[curr_size_] = 0;
-    if (curr_size_ < capacity_/4)
+    if (curr_size_*4 <= capacity_)
         resize(capacity_/scale_factor_);
     return data;
 }
