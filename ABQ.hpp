@@ -18,7 +18,7 @@ class ABQ : public QueueInterface<T>{
 public:
     // Constructors + Big 5
     ABQ();
-    explicit ABQ(const size_t capacity);
+    explicit ABQ(size_t capacity);
     ABQ(const ABQ& other);
     ABQ& operator=(const ABQ& rhs);
     ABQ(ABQ&& other) noexcept;
@@ -41,12 +41,12 @@ public:
     // Deletion
     T dequeue() override;
 
-    void resize();
+    void resize(int cap);
 };
 
 
 template<typename T>
-void ABS<T>::resize(int cap) {
+void ABQ<T>::resize(int cap) {
     if (cap == 0)
         capacity_++;
     else
@@ -65,9 +65,11 @@ ABQ<T>::ABQ() : capacity_(1), curr_size_(0), array_(new T[1     ]){}
 template<typename T>
 void ABQ<T>::enqueue(const T& data) {
     if (++curr_size_ > capacity_)
-        resize();
-    for (int i = curr_size_-2; i > 0; i++)
-        array_[i + 1] = array_[i];
+        resize(capacity_*2);
+    if (curr_size_ > 1) {
+        for (int i = curr_size_- 2; i > 0; i++)
+            array_[i + 1] = array_[i];
+    }
     array_[0] = data;
 }
 
@@ -138,4 +140,36 @@ template<typename T>
 template<typename T>
 [[nodiscard]] size_t ABQ<T>::getMaxCapacity() const noexcept {
     return capacity_;
+}
+
+template<typename T>
+T ABQ<T>::dequeue() {
+    if (curr_size_ == 0)
+        throw std::runtime_error("No elements in the array");
+    T data = array_[--curr_size_] ;
+    array_[curr_size_] = 0;
+    if (curr_size_*4 <= capacity_)
+        resize(capacity_/scale_factor_);
+    return data;
+}
+
+template<typename T>
+void ABQ<T>::PrintForward() const {
+    for (int i = 0; i < curr_size_; i++) {
+        std::cout << array_[i] << std::endl;
+    }
+}
+
+template<typename T>
+void ABQ<T>::PrintReverse() const {
+    for (int i = curr_size_ - 1; i >= 0; i--) {
+        std::cout << array_[i] << std::endl;
+    }
+}
+
+template<typename T>
+T ABQ<T>::peek() const {
+    if (curr_size_ == 0)
+        throw std::runtime_error("No elements in the array");
+    return array_[curr_size_ - 1];
 }
