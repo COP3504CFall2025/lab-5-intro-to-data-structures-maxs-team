@@ -50,7 +50,7 @@ template<typename T>
 void ABS<T>::resize() {
     capacity_ *= scale_factor_;
     T* new_arr = new T[capacity_];
-    for (int i = 0; i < curr_size_; i++) {
+    for (int i = 0; static_cast<size_t>(i) < curr_size_; i++) {
         new_arr[i] = array_[i];
     }
     delete[] array_;
