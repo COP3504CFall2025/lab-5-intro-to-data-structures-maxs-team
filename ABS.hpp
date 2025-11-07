@@ -57,7 +57,7 @@ void ABS<T>::resize() {
 }
 
 template<typename T>
-ABS<T>::ABS() : capacity_(4), curr_size_(0), array_(new T[4]){}
+ABS<T>::ABS() : capacity_(1), curr_size_(0), array_(new T[1]){}
 
 template<typename T>
 void ABS<T>::push(const T& data) {

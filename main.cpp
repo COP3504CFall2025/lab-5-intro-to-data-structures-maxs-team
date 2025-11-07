@@ -19,8 +19,14 @@
 */
 
 int main() {
-
-
+    ABS<int>* one = new ABS<int>();
+    one -> push(1);
+    one -> push(2);
+    one -> PrintForward();
+    one -> pop();
+    one -> PrintForward();
+    delete one;
+    one = nullptr;
     return 0;
 }
 

@@ -57,7 +57,7 @@ void ABQ<T>::resize() {
 }
 
 template<typename T>
-ABQ<T>::ABQ() : capacity_(4), curr_size_(0), array_(new T[4]){}
+ABQ<T>::ABQ() : capacity_(1), curr_size_(0), array_(new T[1     ]){}
 
 template<typename T>
 void ABQ<T>::enqueue(const T& data) {
@@ -89,21 +89,21 @@ ABQ<T>& ABQ<T>::operator=(const ABQ<T>& rhs) {
 }
 
 template<typename T>
-ABS<T>::ABS(const ABS& other) : capacity_(other.capacity_), curr_size_(0), array_(new T[other.capacity]) {
+ABQ<T>::ABQ(const ABQ& other) : capacity_(other.capacity_), curr_size_(0), array_(new T[other.capacity]) {
     for (int i = 0; i < other.curr_size_; i++) {
         this -> push(other.array_[i]);
     }
 }
 
 template<typename T>
-ABS<T>::ABS(ABS&& other) noexcept : capacity_(other.capacity_), curr_size_(other.curr_size_), array_(other.array_) {
+ABQ<T>::ABQ(ABQ&& other) noexcept : capacity_(other.capacity_), curr_size_(other.curr_size_), array_(other.array_) {
     other.capacity_ = 0;
     other.curr_size_ = 0;
     other.array_ = nullptr;
 }
 
 template<typename T>
-ABS<T>& ABS<T>::operator=(ABS&& rhs) noexcept {
+ABQ<T>& ABQ<T>::operator=(ABQ&& rhs) noexcept {
     if (this == &rhs)
         return *this;
 
@@ -121,18 +121,18 @@ ABS<T>& ABS<T>::operator=(ABS&& rhs) noexcept {
 }
 
 template<typename T>
-ABS<T>::~ABS() noexcept {
+ABQ<T>::~ABQ() noexcept {
     delete[] array_;
     capacity_ = 0;
     curr_size_ = 0;
 }
 
 template<typename T>
-[[nodiscard]] size_t ABS<T>::getSize() const noexcept {
+[[nodiscard]] size_t ABQ<T>::getSize() const noexcept {
     return curr_size_;
 }
 
 template<typename T>
-[[nodiscard]] size_t ABS<T>::getMaxCapacity() const noexcept {
+[[nodiscard]] size_t ABQ<T>::getMaxCapacity() const noexcept {
     return capacity_;
 }

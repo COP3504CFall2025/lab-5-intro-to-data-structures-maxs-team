@@ -19,8 +19,7 @@ list(REMOVE_ITEM GRADESCOPE_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/main.cpp")
 
 add_executable(RunMain
         ${MAIN_SRCS}
-        Node.hpp
-        LinkedList.cpp
+        main.cpp
 )
 # adds back main.cpp by defining MAIN with -DMAIN in the compilation line
 target_compile_definitions(RunMain PRIVATE MAIN)
