@@ -27,7 +27,6 @@ public:
     [[nodiscard]] size_t getMaxCapacity() const noexcept;
 
     void PrintForward() const;
-
     void PrintReverse() const;
 
     // Push item onto the stack
@@ -76,9 +75,9 @@ ABS<T>& ABS<T>::operator=(const ABS<T>& rhs) {
         return *this;
 
     this -> capacity_ = rhs.capacity_;
-    delete[] array_;
+    delete[] this -> array_;
 
-    array_ = new T[capacity_];
+    this -> array_ = new T[capacity_];
 
     for (int i = 0; i < rhs.curr_size_; i++) {
         this -> push(rhs.array_[i]);
@@ -106,7 +105,7 @@ ABS<T>& ABS<T>::operator=(ABS&& rhs) noexcept {
     if (this == &rhs)
         return *this;
 
-    delete[] array_;
+    delete[] this -> array_;
 
     this -> capacity_ = rhs.capacity_;
     this -> curr_size_ = rhs.curr_size_;
@@ -114,14 +113,14 @@ ABS<T>& ABS<T>::operator=(ABS&& rhs) noexcept {
 
     rhs.capacity_ = 0;
     rhs.curr_size_ = 0;
-    array_ = nullptr;
+    this -> array_ = nullptr;
 
     return *this;
 }
 
 template<typename T>
 ABS<T>::~ABS() noexcept {
-    delete[] array_;
+    delete[] this -> array_;
     capacity_ = 0;
     curr_size_ = 0;
 }
@@ -161,8 +160,7 @@ template<typename T>
 T ABS<T>::pop() {
     if (curr_size_ == 0)
         throw std::runtime_error("No elements in the array");
-    T data = array_[curr_size_-1] ;
-    curr_size_--;
-    array_[curr_size_-1] = 0;
+    T data = array_[--curr_size_] ;
+    array_[curr_size_] = 0;
     return data;
 }
