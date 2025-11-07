@@ -61,7 +61,7 @@ template<typename T>
 ABS<T>::ABS() : capacity_(4), curr_size_(0), array_(new T[4]){}
 
 template<typename T>
-void ABS<T>::push(const T& data) override {
+void ABS<T>::push(const T& data) {
     if (++curr_size_ > capacity_)
         resize();
     array_[curr_size_-1] = data;
@@ -95,7 +95,7 @@ ABS<T>::ABS(const ABS& other) : capacity_(other.capacity_), curr_size_(0), array
 }
 
 template<typename T>
-ABS<T>::ABS(ABS&& other) : capacity_(other.capacity_), curr_size_(other.curr_size_), array_(other.array_) {
+ABS<T>::ABS(ABS&& other) noexcept : capacity_(other.capacity_), curr_size_(other.curr_size_), array_(other.array_) {
     other.capacity_ = 0;
     other.curr_size_ = 0;
     other.array_ = nullptr;
@@ -127,7 +127,7 @@ ABS<T>::~ABS() noexcept {
 }
 
 template<typename T>
-[[nodiscard]] size_t ABS<T>::getSize() const noexcept override {
+[[nodiscard]] size_t ABS<T>::getSize() const noexcept {
     return curr_size_;
 }
 
@@ -151,12 +151,12 @@ void ABS<T>::PrintReverse() const {
 }
 
 template<typename T>
-T ABS<T>::peek() const override {
+T ABS<T>::peek() const {
     return array_[curr_size_ - 1];
 }
 
 template<typename T>
-T ABS<T>::pop() override {
+T ABS<T>::pop() {
     T data = array_[curr_size_-1] ;
     curr_size_--;
     array_[curr_size_-1] = 0;
