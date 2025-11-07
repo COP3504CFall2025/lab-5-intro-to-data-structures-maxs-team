@@ -87,7 +87,7 @@ ABS<T>& ABS<T>::operator=(const ABS<T>& rhs) {
 }
 
 template<typename T>
-ABS<T>::ABS(const ABS& other) : capacity_(other.capacity_), curr_size_(0), array_(new T[other.capacity]) {
+ABS<T>::ABS(const ABS& other) : capacity_(other.capacity_), curr_size_(0), array_(new T[other.capacity_]) {
     for (int i = 0; i < other.curr_size_; i++) {
         this -> push(other.array_[i]);
     }

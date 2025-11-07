@@ -19,12 +19,15 @@
 */
 
 int main() {
-    ABS<int>* one = new ABS<int>();
+    ABS<int>* one = new ABS<int>(4);
     one -> push(1);
     one -> push(2);
+    one -> push(3);
+    ABS<int>* two = new ABS<int>(*one);
     one -> PrintForward();
-    one -> pop();
-    one -> PrintForward();
+    two -> pop();
+    two -> PrintForward();
+    std::cout << "peek: " << two -> peek();
     delete one;
     one = nullptr;
     return 0;
