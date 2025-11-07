@@ -36,7 +36,7 @@ public:
 
     T pop() override;
 
-    void resize();
+    void resize(int cap);
 
 private:
     size_t capacity_;
@@ -46,11 +46,11 @@ private:
 };
 
 template<typename T>
-void ABS<T>::resize() {
-    if (capacity_ == 0)
+void ABS<T>::resize(int cap) {
+    if (cap == 0)
         capacity_++;
     else
-        capacity_ *= scale_factor_;
+        capacity_ = cap;
     T* new_arr = new T[capacity_];
     for (int i = 0; static_cast<size_t>(i) < curr_size_; i++) {
         new_arr[i] = array_[i];
@@ -65,7 +65,7 @@ ABS<T>::ABS() : capacity_(1), curr_size_(0), array_(new T[1]){}
 template<typename T>
 void ABS<T>::push(const T& data) {
     if (curr_size_ >= capacity_)
-        resize();
+        resize(capacity_*scale_factor_);
     array_[curr_size_++] = data;
 }
 
@@ -165,5 +165,7 @@ T ABS<T>::pop() {
         throw std::runtime_error("No elements in the array");
     T data = array_[--curr_size_] ;
     array_[curr_size_] = 0;
+    if (curr_size_ <= capacity_/2)
+        resize();
     return data;
 }
