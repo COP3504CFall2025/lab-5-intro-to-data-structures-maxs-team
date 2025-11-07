@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstddef>
+#include <iostream>
 #include <stdexcept>
 #include "Interfaces.hpp"
 
@@ -25,8 +26,9 @@ public:
     // Get the max size of the ABS
     [[nodiscard]] size_t getMaxCapacity() const noexcept;
 
-    // Return underlying data for the stack
-    [[nodiscard]] T* getData() const noexcept;
+    void PrintForward() const;
+
+    void PrintReverse() const;
 
     // Push item onto the stack
     void push(const T& data) override;
@@ -35,9 +37,128 @@ public:
 
     T pop() override;
 
+    void resize();
+
 private:
     size_t capacity_;
     size_t curr_size_;
     T* array_;
     static constexpr size_t scale_factor_ = 2;
 };
+
+template<typename T>
+void ABS<T>::resize() {
+    capacity_ *= scale_factor_;
+    T* new_arr = new T[capacity_];
+    for (int i = 0; i < curr_size_; i++) {
+        new_arr[i] = array_[i];
+    }
+    delete[] array_;
+    array_ = new_arr;
+}
+
+template<typename T>
+ABS<T>::ABS() : capacity_(4), curr_size_(0), array_(new T[4]){}
+
+template<typename T>
+void ABS<T>::push(const T& data) override {
+    if (++curr_size_ > capacity_)
+        resize();
+    array_[curr_size_-1] = data;
+}
+
+template<typename T>
+ABS<T>::ABS(const size_t capacity) : capacity_(capacity), curr_size_(0), array_(new T[capacity]) {}
+
+template<typename T>
+ABS<T>& ABS<T>::operator=(const ABS<T>& rhs) {
+    if (this == &rhs)
+        return *this;
+
+    this -> capacity_ = rhs.capacity_;
+    delete[] array_;
+
+    array_ = new T[capacity_];
+
+    for (int i = 0; i < rhs.curr_size_; i++) {
+        this -> push(rhs.array_[i]);
+    }
+
+    return *this;
+}
+
+template<typename T>
+ABS<T>::ABS(const ABS& other) : capacity_(other.capacity_), curr_size_(0), array_(new T[other.capacity]) {
+    for (int i = 0; i < other.curr_size_; i++) {
+        this -> push(other.array_[i]);
+    }
+}
+
+template<typename T>
+ABS<T>::ABS(ABS&& other) : capacity_(other.capacity_), curr_size_(other.curr_size_), array_(other.array_) {
+    other.capacity_ = 0;
+    other.curr_size_ = 0;
+    other.array_ = nullptr;
+}
+
+template<typename T>
+ABS<T>& ABS<T>::operator=(ABS&& rhs) noexcept {
+    if (this == &rhs)
+        return *this;
+
+    delete[] array_;
+
+    this -> capacity_ = rhs.capacity_;
+    this -> curr_size_ = rhs.curr_size_;
+    this -> array_ = rhs.array_;
+
+    rhs.capacity_ = 0;
+    rhs.curr_size_ = 0;
+    array_ = nullptr;
+
+    return *this;
+}
+
+template<typename T>
+ABS<T>::~ABS() noexcept {
+    delete[] array_;
+    capacity_ = 0;
+    curr_size_ = 0;
+}
+
+template<typename T>
+[[nodiscard]] size_t ABS<T>::getSize() const noexcept override {
+    return curr_size_;
+}
+
+template<typename T>
+[[nodiscard]] size_t ABS<T>::getMaxCapacity() const noexcept {
+    return capacity_;
+}
+
+template<typename T>
+void ABS<T>::PrintForward() const {
+    for (int i = 0; i < curr_size_; i++) {
+        std::cout << array_[i] << std::endl;
+    }
+}
+
+template<typename T>
+void ABS<T>::PrintReverse() const {
+    for (int i = curr_size_ - 1; i >= 0; i--) {
+        std::cout << array_[i] << std::endl;
+    }
+}
+
+template<typename T>
+T ABS<T>::peek() const override {
+    return array_[curr_size_ - 1];
+}
+
+template<typename T>
+T ABS<T>::pop() override {
+    T data = array_[curr_size_-1] ;
+    curr_size_--;
+    array_[curr_size_-1] = 0;
+    return data;
+}
