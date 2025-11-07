@@ -64,9 +64,9 @@ ABQ<T>::ABQ() : capacity_(1), curr_size_(0), array_(new T[1]){}
 
 template<typename T>
 void ABQ<T>::enqueue(const T& data) {
-    if (++curr_size_ > capacity_)
+    if (curr_size_ + 1 > capacity_)
         resize(capacity_*2);
-    if (curr_size_ > 1) {
+    if (curr_size_++ > 1) {
         for (int i = curr_size_- 2; i > 0; i--)
             array_[i + 1] = array_[i];
     }
@@ -94,9 +94,9 @@ ABQ<T>& ABQ<T>::operator=(const ABQ<T>& rhs) {
 }
 
 template<typename T>
-ABQ<T>::ABQ(const ABQ& other) : capacity_(other.capacity_), curr_size_(0), array_(new T[other.capacity]) {
+ABQ<T>::ABQ(const ABQ& other) : capacity_(other.capacity_), curr_size_(other.curr_size_), array_(new T[other.capacity]) {
     for (int i = 0; i < other.curr_size_; i++) {
-        this -> push(other.array_[i]);
+        this -> array[i] = (other.array_[i]);
     }
 }
 
@@ -120,7 +120,7 @@ ABQ<T>& ABQ<T>::operator=(ABQ&& rhs) noexcept {
 
     rhs.capacity_ = 0;
     rhs.curr_size_ = 0;
-    array_ = nullptr;
+    rhs.array_ = nullptr;
 
     return *this;
 }
