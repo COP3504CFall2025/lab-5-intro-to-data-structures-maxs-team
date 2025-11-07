@@ -61,9 +61,9 @@ ABS<T>::ABS() : capacity_(1), curr_size_(0), array_(new T[1]){}
 
 template<typename T>
 void ABS<T>::push(const T& data) {
-    if (curr_size_ == capacity_)
+    if (++curr_size_ > capacity_)
         resize();
-    array_[curr_size_++] = data;
+    array_[curr_size_-1] = data;
 }
 
 template<typename T>
