@@ -146,8 +146,8 @@ template<typename T>
 T ABQ<T>::dequeue() {
     if (curr_size_ == 0)
         throw std::runtime_error("No elements in the array");
-    T data = array_[--curr_size_] ;
-    array_[curr_size_ + 1] = 0;
+    T data = array_[curr_size_ - 1] ;
+    array_[--curr_size_] = 0;
     if (curr_size_*4 <= capacity_)
         resize(capacity_/scale_factor_);
     return data;
