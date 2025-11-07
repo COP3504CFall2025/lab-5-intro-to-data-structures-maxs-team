@@ -152,11 +152,15 @@ void ABS<T>::PrintReverse() const {
 
 template<typename T>
 T ABS<T>::peek() const {
+    if (curr_size_ == 0)
+        throw std::runtime_error("No elements in the array");
     return array_[curr_size_ - 1];
 }
 
 template<typename T>
 T ABS<T>::pop() {
+    if (curr_size_ == 0)
+        throw std::runtime_error("No elements in the array");
     T data = array_[curr_size_-1] ;
     curr_size_--;
     array_[curr_size_-1] = 0;
