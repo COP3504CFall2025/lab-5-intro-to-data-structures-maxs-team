@@ -24,7 +24,9 @@ int main() {
     one -> enqueue(1);
     one -> enqueue(2);
     one -> enqueue(3);
-
+    one -> enqueue(4);
+    one -> PrintForward();
+    std::cout << one -> dequeue() << one -> getSize();
     delete one;
     one = nullptr;
     return 0;

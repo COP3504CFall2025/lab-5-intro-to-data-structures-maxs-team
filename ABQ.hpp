@@ -64,12 +64,12 @@ ABQ<T>::ABQ() : capacity_(1), curr_size_(0), array_(new T[1]){}
 
 template<typename T>
 void ABQ<T>::enqueue(const T& data) {
-    if (curr_size_ + 1 > capacity_)
+    if (curr_size_ + 1 >= capacity_)
         resize(capacity_*2);
-    if (curr_size_++ > 1) {
-        for (int i = curr_size_- 2; i > 0; i--)
-            array_[i + 1] = array_[i];
-    }
+    for (int i = curr_size_-1; i >= 0; i--)
+        array_[i+1] = array_[i];
+
+    curr_size_++;
     array_[0] = data;
 }
 
@@ -146,8 +146,8 @@ template<typename T>
 T ABQ<T>::dequeue() {
     if (curr_size_ == 0)
         throw std::runtime_error("No elements in the array");
-    T data = array_[curr_size_ - 1] ;
-    array_[--curr_size_] = 0;
+    T data = array_[--curr_size_] ;
+    array_[curr_size_] = 0;
     if (curr_size_*4 <= capacity_)
         resize(capacity_/scale_factor_);
     return data;
