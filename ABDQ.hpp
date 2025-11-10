@@ -189,9 +189,9 @@ T ABDQ<T>::popFront() {
     if (size_ == 0)
         throw std::runtime_error("No elements in the array");
     T item = data_[0];
-    for (int i = --size_; i >= 1; i--)
-        data_[i-1] = data_[i];
-    data_[size_] = 0;
+    for (int i = 0; i < size_-1; i++)
+        data_[i] = data_[i+1];
+    data_[size_--] = 0;
     if (size_*4 <= capacity_)
         resize(capacity_/2);
     back_--;

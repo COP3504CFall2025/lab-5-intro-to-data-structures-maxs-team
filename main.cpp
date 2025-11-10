@@ -19,14 +19,23 @@
 */
 
 int main() {
-    ABQ<int>* one = new ABQ<int>();
+    ABDQ<int>* one = new ABDQ<int>();
 
-    one -> enqueue(1);
-    one -> enqueue(2);
-    one -> enqueue(3);
-    one -> enqueue(4);
+    one -> pushFront(1);
+    one -> pushBack(2);
+    one -> pushFront(3);
+    one -> pushBack(4);
+    one -> pushBack(5);
+    one -> pushBack(6);
+    one -> popBack();
     one -> PrintForward();
-    std::cout << one -> dequeue() << one -> getSize();
+    one -> popFront();
+    one -> PrintForward();
+    one -> popBack();
+    one -> PrintForward();
+    one -> popFront();
+    one -> PrintForward();
+    std::cout << one -> popBack() << one -> getSize();
     delete one;
     one = nullptr;
     return 0;
