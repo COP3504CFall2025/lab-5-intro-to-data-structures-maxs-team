@@ -41,7 +41,8 @@ public:
     void PrintForward() const;
     void PrintReverse() const;
 
-    void resize(int cap);
+    void ensureCapacity();
+    void shrinkIfNeeded();
 
     // Getters
     std::size_t getSize() const noexcept override;
@@ -49,13 +50,13 @@ public:
 };
 
 template<typename T>
-void ABDQ<T>::resize(int cap) {
-    if (cap == 0)
+void ABDQ<T>::ensureCapacity() {
+    if (capacity_ == 0)
         capacity_++;
     else
-        capacity_ = cap;
+        capacity_ *= 2;
     T* new_arr = new T[capacity_];
-    for (int i = 0; static_cast<size_t>(i) < size_; i++) {
+    for (int i = front_; static_cast<size_t>(i) < size_; i = (i + 1)%capacity_) {
         new_arr[i] = data_[i];
     }
     delete[] data_;
@@ -63,13 +64,26 @@ void ABDQ<T>::resize(int cap) {
 }
 
 template<typename T>
+void ABDQ<T>::shrinkIfNeeded() {
+    if (size_*4 <= capacity_) {
+        capacity_ = capacity_/2;
+        T* new_arr = new T[capacity_];
+        for (int i = front_; static_cast<size_t>(i) < size_; i = (i + 1)%capacity_) {
+            new_arr[i] = data_[i];
+        }
+        delete[] data_;
+        data_ = new_arr;
+    }
+}
+
+template<typename T>
 const T& ABDQ<T>::front() const {
-    return front_;
+    return data_(front_);
 }
 
 template<typename T>
 const T& ABDQ<T>::back() const {
-    return back_;
+    return data_(back_-1);
 }
 
 template<typename T>
@@ -144,6 +158,7 @@ ABDQ<T>& ABDQ<T>::operator=(ABDQ&& rhs) noexcept {
 template<typename T>
 ABDQ<T>::~ABDQ() {
     delete[] data_;
+    data_ = nullptr;
     front_ = 0;
     back_ = 0;
     capacity_ = 0;
@@ -166,21 +181,15 @@ void ABDQ<T>::PrintReverse() const {
 
 template<typename T>
 void ABDQ<T>::pushFront(const T& item) {
-    if (size_ + 1 >= capacity_)
-        resize(capacity_*2);
-    for (int i = size_-1; i >= 0; i--)
-        data_[i+1] = data_[i];
-
+    front_ = (front_ - 1) % capacity_;
+    data_[front_] = item;
     size_++;
-    back_++;
-    data_[0] = item;
 }
 
 template<typename T>
 void ABDQ<T>::pushBack(const T& item) {
-    if (size_ >= capacity_)
-        resize(capacity_*2);
-    data_[back_++] = item;
+    data_[back_] = item;
+    back_ = (back_ + 1) % capacity_;
     size_++;
 }
 
@@ -188,13 +197,10 @@ template<typename T>
 T ABDQ<T>::popFront() {
     if (size_ == 0)
         throw std::runtime_error("No elements in the array");
-    T item = data_[0];
-    for (int i = 0; i < size_-1; i++)
-        data_[i] = data_[i+1];
-    data_[size_--] = 0;
-    if (size_*4 <= capacity_)
-        resize(capacity_/2);
-    back_--;
+    T item = data_[front_];
+    data_[front_] = 0;
+    front_ = (front_ + 1) % capacity_;
+    size_--;
     return item;
 }
 
@@ -202,10 +208,9 @@ template<typename T>
 T ABDQ<T>::popBack() {
     if (size_ == 0)
         throw std::runtime_error("No elements in the array");
-    T item = data_[--size_] ;
-    data_[size_] = 0;
-    if (size_*4 <= capacity_)
-        resize(capacity_/2);
-    back_--;
+    back_ = (back_ - 1) % capacity_;
+    T item = data_[back_] ;
+    data_[back_] = 0;
+    size_--;
     return item;
 }

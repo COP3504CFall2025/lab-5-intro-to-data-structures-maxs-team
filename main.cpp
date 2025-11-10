@@ -1,4 +1,4 @@
-#ifdef MAIN
+//#ifdef MAIN
 
 #include "ABDQ.hpp"
 #include "ABQ.hpp"
@@ -27,6 +27,10 @@ int main() {
     one -> pushBack(4);
     one -> pushBack(5);
     one -> pushBack(6);
+
+    ABDQ<int>* two = new ABDQ<int>(*one);
+    ABDQ<int>* three = std::move(two);
+
     one -> popBack();
     one -> PrintForward();
     one -> popFront();
@@ -35,11 +39,15 @@ int main() {
     one -> PrintForward();
     one -> popFront();
     one -> PrintForward();
+
     std::cout << one -> popBack() << one -> getSize();
     delete one;
+    delete three;
     one = nullptr;
+    two = nullptr;
+    three = nullptr;
     return 0;
 }
 
 
-#endif
+//#endif
