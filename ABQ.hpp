@@ -81,6 +81,7 @@ ABQ<T>& ABQ<T>::operator=(const ABQ<T>& rhs) {
     if (this == &rhs)
         return *this;
 
+    this -> curr_size_ = rhs.curr_size_;
     this -> capacity_ = rhs.capacity_;
     delete[] this -> array_;
 
@@ -94,7 +95,7 @@ ABQ<T>& ABQ<T>::operator=(const ABQ<T>& rhs) {
 }
 
 template<typename T>
-ABQ<T>::ABQ(const ABQ& other) : capacity_(other.capacity_), curr_size_(other.curr_size_), array_(new T[other.capacity]) {
+ABQ<T>::ABQ(const ABQ& other) : capacity_(other.capacity_), curr_size_(other.curr_size_), array_(new T[other.capacity_]) {
     for (int i = 0; i < other.curr_size_; i++) {
         this -> array[i] = (other.array_[i]);
     }

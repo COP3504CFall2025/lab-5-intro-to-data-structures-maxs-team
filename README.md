@@ -285,7 +285,7 @@ Implements **DequeInterface<T>** using a **circular buffer** model.
      └────────────┬────────────────┘
                   │
         ┌─────────┼────────────────────┐
-        │          │                    │
+        │         │                    │
    Array-Based   Linked-List           Deque
      (ABS/ABQ)   (LLS/LLQ)          (LLDQ/ABDQ)
 ```
