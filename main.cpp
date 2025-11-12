@@ -27,13 +27,11 @@ int main() {
     one -> pushBack(4);
     one -> pushBack(5);
     one -> pushBack(6);
-    one -> popBack();
-    one -> popFront();
 
     ABDQ<int>* two = new ABDQ<int>(*one);
     ABDQ<int>* three = std::move(two);
 
-    std::cout << one -> front() << one -> getSize();
+    std::cout << one -> front() << one -> back() << one -> getSize();
     delete one;
     delete three;
     one = nullptr;

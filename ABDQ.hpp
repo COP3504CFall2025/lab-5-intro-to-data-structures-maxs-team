@@ -56,11 +56,13 @@ void ABDQ<T>::ensureCapacity() {
     else
         capacity_ *= 2;
     T* new_arr = new T[capacity_];
-    for (int i = 0; static_cast<size_t>(i) < size_; i++) {
-        new_arr[i] = data_[i];
+    for (int i = 0; static_cast<size_t>(i) < size_ ; i++) {
+        new_arr[i] = data_[(front_ + i) % capacity_];
     }
     delete[] data_;
     data_ = new_arr;
+    front_ = 0;
+    back_ = size_;
 }
 
 template<typename T>
@@ -187,13 +189,20 @@ void ABDQ<T>::PrintReverse() const {
 
 template<typename T>
 void ABDQ<T>::pushFront(const T& item) {
+    if (size_ == capacity_)
+        ensureCapacity();
+
     front_ = (front_ - 1 + capacity_) % capacity_;
+
     data_[front_] = item;
     size_++;
 }
 
 template<typename T>
 void ABDQ<T>::pushBack(const T& item) {
+    if (size_ == capacity_)
+        ensureCapacity();
+
     data_[back_] = item;
     back_ = (back_ + 1) % capacity_;
     size_++;
