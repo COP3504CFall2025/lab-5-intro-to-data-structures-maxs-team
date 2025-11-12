@@ -11,7 +11,7 @@ private:
     LinkedList<T> list;
 public:
     // Constructor
-    LLS();
+    LLS() = default;
 
     // Insertion
     void push(const T& item) override;
@@ -25,3 +25,26 @@ public:
     //Getters
     std::size_t getSize() const noexcept override;
 };
+
+template<typename T>
+void LLS<T>::push(const T& item) {
+    list.addTail(item);
+}
+
+template<typename T>
+T LLS<T>::pop() {
+    T* temp = list.getTail();
+    list.removeTail();
+    return *temp;
+}
+
+template<typename T>
+T LLS<T>::peek() const {
+    T* temp = list.getTail();
+    return *temp;
+}
+
+template<typename T>
+std::size_t LLS<T>::getSize() const noexcept {
+    return list.getCount();
+}
