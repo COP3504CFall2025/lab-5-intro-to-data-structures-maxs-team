@@ -33,8 +33,51 @@ public:
     std::size_t getSize() const noexcept override;
 };
 
+template<typename T>
+LLDQ<T>::LLDQ() : list(LinkedList<T>()) {}
 
+template<typename T>
+void LLDQ<T>::pushFront(const T& item) {
+    list.addHead(item);
+}
 
+template<typename T>
+T LLDQ<T>::popFront() {
+    if (list.getCount() == 0)
+        throw std::runtime_error("no elements");
+    T temp = list.getHead() -> data;
+    list.removeHead();
+    return temp;
+}
 
+template<typename T>
+std::size_t LLDQ<T>::getSize() const noexcept {
+    return list.getCount();
+}
 
+template<typename T>
+void LLDQ<T>::pushBack(const T& item) {
+    list.addTail(item);
+}
+
+template<typename T>
+T LLDQ<T>::popBack() {
+    if (list.getCount() == 0)
+        throw std::runtime_error("no elements");
+    T temp = list.getTail() -> data;
+    list.removeTail();
+    return temp;
+}
+
+template<typename T>
+const T& LLDQ<T>::front() const {
+    Node<T>* temp = list.getHead();
+    return temp -> data;
+}
+
+template<typename T>
+const T& LLDQ<T>::back() const {
+    Node<T>* temp = list.getTail();
+    return temp -> data;
+}
 
