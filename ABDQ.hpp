@@ -78,11 +78,15 @@ void ABDQ<T>::shrinkIfNeeded() {
 
 template<typename T>
 const T& ABDQ<T>::front() const {
+    if (size_ == 0)
+        throw std::runtime_error("No elements in the array");
     return data_[front_];
 }
 
 template<typename T>
 const T& ABDQ<T>::back() const {
+    if (size_ == 0)
+        throw std::runtime_error("No elements in the array");
     return data_[(back_-1+capacity_)%capacity_];
 }
 

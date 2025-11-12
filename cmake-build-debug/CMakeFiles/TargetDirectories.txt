@@ -1,0 +1,3 @@
+/home/maxafitz/COP3504C/labs/lab-5-dsa/cmake-build-debug/CMakeFiles/RunMain.dir
+/home/maxafitz/COP3504C/labs/lab-5-dsa/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/maxafitz/COP3504C/labs/lab-5-dsa/cmake-build-debug/CMakeFiles/rebuild_cache.dir
