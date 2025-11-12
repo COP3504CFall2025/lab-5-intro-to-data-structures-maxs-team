@@ -11,7 +11,7 @@ private:
     LinkedList<T> list;
 public:
     // Constructor
-    LLS() = default;
+    LLS();
 
     // Insertion
     void push(const T& item) override;
@@ -25,6 +25,9 @@ public:
     //Getters
     std::size_t getSize() const noexcept override;
 };
+
+template<typename T>
+LLS<T>::LLS() : list(new LinkedList<T>()) {}
 
 template<typename T>
 void LLS<T>::push(const T& item) {
