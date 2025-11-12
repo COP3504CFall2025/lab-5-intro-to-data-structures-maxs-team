@@ -36,6 +36,8 @@ void LLS<T>::push(const T& item) {
 
 template<typename T>
 T LLS<T>::pop() {
+    if (list.getCount() == 0)
+        throw std::runtime_error("no elements");
     T temp = list.getTail() -> data;
     list.removeTail();
     return temp;
@@ -43,6 +45,8 @@ T LLS<T>::pop() {
 
 template<typename T>
 T LLS<T>::peek() const {
+    if (list.getCount() == 0)
+        throw std::runtime_error("no elements");
     T temp = list.getTail() -> data;
     return temp;
 }
