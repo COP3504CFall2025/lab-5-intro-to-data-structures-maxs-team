@@ -19,24 +19,10 @@
 */
 
 int main() {
-    ABDQ<int>* one = new ABDQ<int>();
+    LLS<int>* one = new LLS<int>();
 
-    one -> pushFront(2);
-    one -> pushBack(3);
-    one -> pushFront(1);
-    one -> pushBack(4);
-    one -> pushBack(5);
-    one -> pushBack(6);
-
-    ABDQ<int>* two = new ABDQ<int>(*one);
-    ABDQ<int>* three = std::move(two);
-
-    std::cout << one -> front() << one -> back() << one -> getSize();
     delete one;
-    delete three;
     one = nullptr;
-    two = nullptr;
-    three = nullptr;
     return 0;
 }
 

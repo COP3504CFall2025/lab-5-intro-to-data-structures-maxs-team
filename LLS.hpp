@@ -27,7 +27,7 @@ public:
 };
 
 template<typename T>
-LLS<T>::LLS() : list(new LinkedList<T>()) {}
+LLS<T>::LLS() : list(LinkedList<T>()) {}
 
 template<typename T>
 void LLS<T>::push(const T& item) {
