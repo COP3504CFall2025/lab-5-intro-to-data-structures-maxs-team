@@ -71,13 +71,13 @@ T LLDQ<T>::popBack() {
 
 template<typename T>
 const T& LLDQ<T>::front() const {
-    Node<T>* temp = list.getHead();
+    const Node<T>* temp = list.getHead();
     return temp -> data;
 }
 
 template<typename T>
 const T& LLDQ<T>::back() const {
-    Node<T>* temp = list.getTail();
+    const Node<T>* temp = list.getTail();
     return temp -> data;
 }
 
