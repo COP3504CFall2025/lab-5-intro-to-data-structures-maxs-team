@@ -56,7 +56,7 @@ void ABDQ<T>::ensureCapacity() {
     else
         capacity_ *= 2;
     T* new_arr = new T[capacity_];
-    for (int i = front_; static_cast<size_t>(i) < size_; i = (i + 1)%capacity_) {
+    for (int i = 0; static_cast<size_t>(i) < size_; i++) {
         new_arr[i] = data_[i];
     }
     delete[] data_;
@@ -68,7 +68,7 @@ void ABDQ<T>::shrinkIfNeeded() {
     if (size_*4 <= capacity_) {
         capacity_ = capacity_/2;
         T* new_arr = new T[capacity_];
-        for (int i = front_; static_cast<size_t>(i) < size_; i = (i + 1)%capacity_) {
+        for (int i = 0; static_cast<size_t>(i) < size_; i++) {
             new_arr[i] = data_[i];
         }
         delete[] data_;
@@ -214,7 +214,7 @@ template<typename T>
 T ABDQ<T>::popBack() {
     if (size_ == 0)
         throw std::runtime_error("No elements in the array");
-    back_ = (back_ - 1) % capacity_;
+    back_ = (back_ - 1 + capacity_) % capacity_;
     T item = data_[back_] ;
     data_[back_] = 0;
     size_--;
