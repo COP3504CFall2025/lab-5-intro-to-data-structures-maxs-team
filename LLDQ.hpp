@@ -71,12 +71,16 @@ T LLDQ<T>::popBack() {
 
 template<typename T>
 const T& LLDQ<T>::front() const {
+    if (list.getCount() == 0)
+        throw std::runtime_error("no elements");
     const Node<T>* temp = list.getHead();
     return temp -> data;
 }
 
 template<typename T>
 const T& LLDQ<T>::back() const {
+    if (list.getCount() == 0)
+        throw std::runtime_error("no elements");
     const Node<T>* temp = list.getTail();
     return temp -> data;
 }
