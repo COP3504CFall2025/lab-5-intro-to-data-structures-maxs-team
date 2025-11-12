@@ -45,7 +45,7 @@ public:
     void shrinkIfNeeded();
 
     // Getters
-    std::size_t getSize() const noexcept override;
+    [[nodiscard]] std::size_t getSize() const noexcept override;
 
 };
 
@@ -78,12 +78,12 @@ void ABDQ<T>::shrinkIfNeeded() {
 
 template<typename T>
 const T& ABDQ<T>::front() const {
-    return data_(front_);
+    return data_[front_];
 }
 
 template<typename T>
 const T& ABDQ<T>::back() const {
-    return data_(back_-1);
+    return data_[(back_-1+capacity_)%capacity_];
 }
 
 template<typename T>
@@ -174,6 +174,8 @@ void ABDQ<T>::PrintForward() const {
 
 template<typename T>
 void ABDQ<T>::PrintReverse() const {
+    if (size_ == 0)
+        throw std::runtime_error("No elements in the array");
     for (int i = size_ - 1; i >= 0; i--) {
         std::cout << data_[i] << std::endl;
     }
@@ -181,7 +183,7 @@ void ABDQ<T>::PrintReverse() const {
 
 template<typename T>
 void ABDQ<T>::pushFront(const T& item) {
-    front_ = (front_ - 1) % capacity_;
+    front_ = (front_ - 1 + capacity_) % capacity_;
     data_[front_] = item;
     size_++;
 }
